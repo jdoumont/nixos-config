@@ -1,6 +1,6 @@
 { agenix, config, pkgs, ... }:
 
-let user = "%USER%"; in
+let user = "jdoumont"; in
 
 {
 
@@ -32,12 +32,14 @@ let user = "%USER%"; in
     '';
   };
 
+  programs.fish.enable = true;
+
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
-    emacs-unstable
+    emacs
     agenix.packages."${pkgs.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
@@ -51,6 +53,19 @@ let user = "%USER%"; in
     ];
     StandardErrorPath = "/tmp/emacs.err.log";
     StandardOutPath = "/tmp/emacs.out.log";
+  };
+  launchd.user.agents.ollama-serve = {
+    command = "${pkgs.ollama}/bin/ollama serve";
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/tmp/ollama.out.log";
+      StandardErrorPath = "/tmp/ollama.err.log";
+    };
+    environment = {
+      OLLAMA_HOST = "0.0.0.0:11434";
+
+    };
   };
 
   system = {
@@ -73,7 +88,7 @@ let user = "%USER%"; in
       };
 
       dock = {
-        autohide = false;
+        autohide = true;
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
@@ -81,7 +96,8 @@ let user = "%USER%"; in
       };
 
       finder = {
-        _FXShowPosixPathInTitle = false;
+        _FXShowPosixPathInTitle = true;
+        _FXSortFoldersFirstOnDesktop = true;
       };
 
       trackpad = {

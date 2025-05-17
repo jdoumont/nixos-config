@@ -2,13 +2,17 @@
 
 with pkgs; [
   # General packages for development and system management
-  alacritty
+  # alacritty
+  kitty
   aspell
   aspellDicts.en
+  aspellDicts.de
   bash-completion
   bat
   btop
+  cmake
   coreutils
+  glibtool
   killall
   neofetch
   openssh
@@ -21,10 +25,12 @@ with pkgs; [
   age-plugin-yubikey
   gnupg
   libfido2
+  wireguard-tools
 
   # Cloud-related tools and SDKs
   docker
   docker-compose
+  podman
 
   # Media-related packages
   emacs-all-the-icons-fonts
@@ -38,9 +44,9 @@ with pkgs; [
   meslo-lgs-nf
 
   # Node.js development tools
-  nodePackages.npm # globally install npm
-  nodePackages.prettier
-  nodejs
+  # nodePackages.npm # globally install npm
+  # nodePackages.prettier
+  # nodejs
 
   # Text and terminal utilities
   htop
@@ -54,8 +60,17 @@ with pkgs; [
   unrar
   unzip
   zsh-powerlevel10k
+  fish
 
   # Python packages
   python3
   virtualenv
+
+  # Programming
+  racket
+  pandoc
+
+  ollama
+  utm
+  # zotero
 ]

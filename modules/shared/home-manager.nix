@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 
-let name = "%NAME%";
-    user = "%USER%";
-    email = "%EMAIL%"; in
+let name = "Jan";
+    user = "jdoumont";
+    email = "jan.doumont@gmail.com"; in
 {
   # Shared shell configuration
   zsh = {
@@ -53,8 +53,8 @@ let name = "%NAME%";
       }
 
       # pnpm is a javascript package manager
-      alias pn=pnpm
-      alias px=pnpx
+      # alias pn=pnpm
+      # alias px=pnpx
 
       # Use difftastic, syntax-aware diffing
       alias diff=difft
@@ -75,10 +75,12 @@ let name = "%NAME%";
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-	    editor = "vim";
+      editor = "vim";
         autocrlf = "input";
       };
       commit.gpgsign = true;
+      gpg.format = "ssh";
+      user.signingkey = "~/.ssh/id_ed25519.pub";
       pull.rebase = true;
       rebase.autoStash = true;
     };
@@ -194,70 +196,70 @@ let name = "%NAME%";
       '';
      };
 
-  alacritty = {
-    enable = true;
-    settings = {
-      cursor = {
-        style = "Block";
-      };
+  # alacritty = {
+  #   enable = true;
+  #   settings = {
+  #     cursor = {
+  #       style = "Block";
+  #     };
 
-      window = {
-        opacity = 1.0;
-        padding = {
-          x = 24;
-          y = 24;
-        };
-      };
+  #     window = {
+  #       opacity = 1.0;
+  #       padding = {
+  #         x = 24;
+  #         y = 24;
+  #       };
+  #     };
 
-      font = {
-        normal = {
-          family = "MesloLGS NF";
-          style = "Regular";
-        };
-        size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
-        ];
-      };
+  #     font = {
+  #       normal = {
+  #         family = "MesloLGS NF";
+  #         style = "Regular";
+  #       };
+  #       size = lib.mkMerge [
+  #         (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
+  #         (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
+  #       ];
+  #     };
 
-      dynamic_padding = true;
-      decorations = "full";
-      title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
-      };
+  #     dynamic_padding = true;
+  #     decorations = "full";
+  #     title = "Terminal";
+  #     class = {
+  #       instance = "Alacritty";
+  #       general = "Alacritty";
+  #     };
 
-      colors = {
-        primary = {
-          background = "0x1f2528";
-          foreground = "0xc0c5ce";
-        };
+  #     colors = {
+  #       primary = {
+  #         background = "0x1f2528";
+  #         foreground = "0xc0c5ce";
+  #       };
 
-        normal = {
-          black = "0x1f2528";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xc0c5ce";
-        };
+  #       normal = {
+  #         black = "0x1f2528";
+  #         red = "0xec5f67";
+  #         green = "0x99c794";
+  #         yellow = "0xfac863";
+  #         blue = "0x6699cc";
+  #         magenta = "0xc594c5";
+  #         cyan = "0x5fb3b3";
+  #         white = "0xc0c5ce";
+  #       };
 
-        bright = {
-          black = "0x65737e";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xd8dee9";
-        };
-      };
-    };
-  };
+  #       bright = {
+  #         black = "0x65737e";
+  #         red = "0xec5f67";
+  #         green = "0x99c794";
+  #         yellow = "0xfac863";
+  #         blue = "0x6699cc";
+  #         magenta = "0xc594c5";
+  #         cyan = "0x5fb3b3";
+  #         white = "0xd8dee9";
+  #       };
+  #     };
+  #   };
+  # };
 
   ssh = {
     enable = true;
@@ -280,6 +282,11 @@ let name = "%NAME%";
             "/Users/${user}/.ssh/id_github"
           )
         ];
+      };
+      "pingu" = {
+        host = "pingu.6a616e.net";
+        port = 2225;
+        identitiesOnly = true;
       };
     };
   };
